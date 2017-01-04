@@ -1,6 +1,3 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_host:     127.0.0.1
     database_port:     ~
@@ -9,11 +6,15 @@ parameters:
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
-
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
-
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem'
+    jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'
+    jwt_key_pass_phrase:  ''
+    jwt_token_ttl:        3600
+    facebook.client_id: 388713991478291
+    facebook.client_secret: 531fd57182ed5f1b32dbcd7d08ebe8da

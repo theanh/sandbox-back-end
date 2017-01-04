@@ -1,8 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section class="vbox" id="wrapperContainer"></section>
+    <fb:login-button
+        scope="public_profile,email"
+        onlogin="checkLoginState();">
+    </fb:login-button>
 {% endblock %}
 
-{% block stylesheets %}
+{% block javascripts %}
+    <script type="text/javascript">
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '388713991478291',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+      };
+
+      // Load the SDK asynchronously
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+      function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+          } else {
+            FB.login(function(response) {
+              if (response.authResponse) {
+                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+              } else {
+                alert('Cancelled.');
+              }
+            }, {scope: 'public_profile,email'});
+          }
+        });
+      }
+    </script>
 {% endblock %}
